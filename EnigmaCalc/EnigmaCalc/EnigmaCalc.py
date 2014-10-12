@@ -6,9 +6,13 @@ from Tkinter import *
 
 root = Tk()
 
+
+
 def callback():
     x = arange(-10, 10, .01)
-    y = eval(e.get()) #Very very evil. We need to do this a lot better; should be a way to only
+    
+    function = e.get().replace("^", "**")
+    y = eval(function) #Very very evil. We need to do this a lot better; should be a way to only
                       #whitelist certain functions 
 
                       #also need to handle simple user errors like using ^ instead of **
