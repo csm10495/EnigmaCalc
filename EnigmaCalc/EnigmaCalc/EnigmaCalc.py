@@ -1,7 +1,7 @@
 #This file is part of EnigmaCalc
 #Team Enigma - RPI SDD - Fall 2014
 
-from pylab import * 
+import pylab 
 from Tkinter import *
 
 root = Tk()
@@ -9,22 +9,31 @@ root = Tk()
 
 
 def callback():
-    x = arange(-10, 10, .01)
+    x = pylab.arange(-10, 10, .01)
     
     function = e.get().replace("^", "**")
     function = function + "+x-x"
-    safe_list = ['acos', 'asin', 'atan', 'atan2', 'ceil', 'cos', 'cosh', 'degrees', 'e', 'exp', 'fabs', 'floor', 'fmod', 'frexp', 'hypot', 'ldexp', 'log', 'log10', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', '+', '-', '*', '/', '**', 'x']
-    safe_dict = dict([ (k, locals().get(k, None)) for k in safe_list ])
+    safe_list = ['sin', 'cos', 'tan'] #todo -> add more functions from pylab to this list
+    safe_dict = dict((k, getattr(pylab, k)) for k in safe_list)
+
+    # ading some more things to safe_dict that are not in pylab
+    safe_dict['x'] = x
+    safe_dict['+'] = locals().get('+')
+    safe_dict['-'] = locals().get('-')
+    safe_dict['/'] = locals().get('/')
+    safe_dict['*'] = locals().get('*')
+    safe_dict['**'] = locals().get('**')
+    #
+
     y = eval(function, {"__builtins__":None}, safe_dict) 
 
 
-                      #also need to handle simple user errors like using ^
-                      #instead of **
-                      #sinx instead of sin(x) 
-                      #Maybe just add '(' x ')' parenthesis to all x's?
+    #sinx instead of sin(x) 
+    #Maybe just add '(' x ')' parenthesis to all x's?
+
     print "Trying to Graph!"
-    plot(x,y)
-    show()
+    pylab.plot(x,y)
+    pylab.show()
 
 # create window contents as children to root...
 w = Label(text = "Input Function\n Y = ")
