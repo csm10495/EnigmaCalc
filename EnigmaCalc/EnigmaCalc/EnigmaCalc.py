@@ -15,7 +15,6 @@ def callback():
     y = eval(function) #Very very evil. We need to do this a lot better; should be a way to only
                       #whitelist certain functions 
 
-                      #also need to handle simple user errors like using ^ instead of **
                       #sinx instead of sin(x) 
                       #Maybe just add '(' x ')' parenthesis to all x's?
     print "Trying to Graph!"
