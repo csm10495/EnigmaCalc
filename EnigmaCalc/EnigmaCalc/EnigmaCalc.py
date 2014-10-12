@@ -12,12 +12,9 @@ def callback():
     x = arange(-10, 10, .01)
     
     function = e.get().replace("^", "**")
-    y = eval(function) #Very very evil. We need to do this a lot better; should be a way to only
-                      #whitelist certain functions 
     safe_list = ['acos', 'asin', 'atan', 'atan2', 'ceil', 'cos', 'cosh', 'degrees', 'e', 'exp', 'fabs', 'floor', 'fmod', 'frexp', 'hypot', 'ldexp', 'log', 'log10', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', '+', '-', '*', '/', '**', 'x']
     safe_dict = dict([ (k, locals().get(k, None)) for k in safe_list ])
-
-    y = eval(e.get(), {"__builtins__":None}, safe_dict) 
+    y = eval(function, {"__builtins__":None}, safe_dict) 
 
                       #also need to handle simple user errors like using ^
                       #instead of **
