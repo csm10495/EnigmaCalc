@@ -8,18 +8,21 @@ root = Tk()
 
 def callback():
     x = arange(-10, 10, .01)
-    y = eval(e.get()) #Very very evil. We need to do this a lot better; should be a way to only
-                      #whitelist certain functions 
+    safe_list = ['acos', 'asin', 'atan', 'atan2', 'ceil', 'cos', 'cosh', 'degrees', 'e', 'exp', 'fabs', 'floor', 'fmod', 'frexp', 'hypot', 'ldexp', 'log', 'log10', 'modf', 'pi', 'pow', 'radians', 'sin', 'sinh', 'sqrt', 'tan', 'tanh', '+', '-', '*', '/', '**', 'x']
+    safe_dict = dict([ (k, locals().get(k, None)) for k in safe_list ])
 
-                      #also need to handle simple user errors like using ^ instead of **
-                      #sinx instead of sin(x) 
+    y = eval(e.get(), {"__builtins__":None}, safe_dict) 
+
+                      #also need to handle simple user errors like using ^
+                      #instead of **
+                      #sinx instead of sin(x)
                       #Maybe just add '(' x ')' parenthesis to all x's?
     print "Trying to Graph!"
     plot(x,y)
     show()
 
 # create window contents as children to root...
-w = Label(text="Input Function\n Y = ")
+w = Label(text = "Input Function\n Y = ")
 w.pack()
 e = Entry()
 e.pack()
