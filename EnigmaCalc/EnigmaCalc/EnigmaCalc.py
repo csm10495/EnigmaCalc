@@ -7,7 +7,6 @@ from Tkinter import *
 root = Tk()
 
 
-
 def callback():
     x = pylab.arange(-10, 10, .01)
     
