@@ -25,7 +25,6 @@ def getSafeDict():
 
 #graphs a function by grabbing from e.get()
 def graph(function_text, safe_dict):
-
     x = pylab.arange(-10, 10, .01)
     safe_dict['x'] = locals().get('x')
 
@@ -36,14 +35,21 @@ def graph(function_text, safe_dict):
 
     #sinx instead of sin(x) 
     #Maybe just add '(' x ')' parenthesis to all x's?
+
     print "Graphing: Y =", function_text
-    pylab.plot(x,y)
+    pylab.plot(x, y, label = function_text)
+
+    #make the graph legend appear
+    pylab.legend(loc='upper right')
+
     pylab.show()
 
 
 #function that needs to be run for the program to start (like a main)
 def startUp():
     safe_dict = getSafeDict()
+
+
 
     # create window contents
     root = Tkinter.Tk()
