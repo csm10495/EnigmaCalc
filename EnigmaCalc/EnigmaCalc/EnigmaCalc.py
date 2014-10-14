@@ -54,6 +54,9 @@ def startUp():
     # create window contents
     root = Tkinter.Tk()
 
+    #set window title
+    root.wm_title("EC")
+
     #instruction text
     instr = Tkinter.Label(root, text = "Input Function")
     instr.pack()
