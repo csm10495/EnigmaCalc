@@ -11,8 +11,8 @@ class Function:
         self.function_text = function_text
     
     def formatFunction(self):       
-        #User can input sin(x) or Sin(x), etc. - Luke
-        self.function_text = self.function_text.replace("^", "**").replace("S", "s").replace("C", "c").replace("T", "t")
+        #All input is converted to lower so no caps matter
+        self.function_text = self.function_text.replace("^", "**").lower()
         self.function_text = self.function_text + "+x-x"
         
     
@@ -51,7 +51,6 @@ class Gui:
         #mainloop needs to be run
         #Every GUI is a loop...
         root.mainloop()
-        
 
     #graphs a function by grabbing from e.get()
     def graph(self, function_text, safe_dict):
@@ -74,13 +73,13 @@ class Gui:
     
         #make the graph legend appear
         pylab.legend(loc='upper right')
-    
+
         pylab.show()
 
     #call this once!
     #gets a dictionary of functions allowed to be called by eval
     def getSafeDict(self):
-        safe_list = ['sin', 'cos', 'tan'] #todo -> add more functions from pylab to this list
+        safe_list = ['sin', 'cos', 'tan', 'arcsin', 'arcsinh', 'sinh', 'arccos', 'arccosh', 'cosh', 'arctan', 'arctanh', 'tanh', 'e', 'log', 'log2', 'log10', 'sqrt'] #todo -> add more functions from pylab to this list
         safe_dict = dict((k, getattr(pylab, k)) for k in safe_list)
     
         # adding some more things to safe_dict that are not in pylab
