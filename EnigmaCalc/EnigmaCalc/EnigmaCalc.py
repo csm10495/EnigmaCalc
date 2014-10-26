@@ -61,7 +61,7 @@ class Gui:
         function = Function(function_text)
         function.formatFunction()
         
-        print "What? " + function.function_text
+        print "What? " + function_text
     
         y = eval(function.function_text, {"__builtins__":None}, safe_dict) 
     
