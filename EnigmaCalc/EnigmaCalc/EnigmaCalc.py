@@ -4,10 +4,9 @@
 import matplotlib
 matplotlib.use('TkAgg')
 
-import pylab     #graphing library, part of matplotlib
-import Tkinter   #GUI library, standard Python
-import tkMessageBox
-
+import pylab        #graphing library, part of matplotlib
+import Tkinter      #GUI library, standard Python
+import tkMessageBox #Used to make the error box
 
 class Function:
     def __init__(self, function_text = ""):
@@ -21,8 +20,6 @@ class Function:
         self.function_text = self.function_text.replace("sec", "1/cos")
         self.function_text = self.function_text.replace("cot", "1/tan")
 
-
-    
 class Gui:
     
     def __init__(self):
@@ -94,9 +91,9 @@ class Gui:
             pylab.show()
             
         except:
-            print function.function_text + "is not a valid function"
+            print function_text, "is not a valid function"
 
-            tkMessageBox.showinfo("Error", function_text + "is not a valid function")
+            tkMessageBox.showinfo("Error", function_text + " is not a valid function")
             
     #call this once!
     #gets a dictionary of functions allowed to be called by eval
