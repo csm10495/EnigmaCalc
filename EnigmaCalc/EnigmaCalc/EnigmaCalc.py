@@ -50,6 +50,10 @@ class Gui:
         #graph button
         b = Tkinter.Button(root, text="Graph!", command = lambda: self.graph(graph_entry.get(), self.safe_dict))
         b.pack()
+
+        #clear button
+        c = Tkinter.Button(root, text="Clear", command = lambda: graph_entry.delete(0,Tkinter.END))
+        c.pack(side = Tkinter.RIGHT)
         
         #mainloop needs to be run
         #Every GUI is a loop...
