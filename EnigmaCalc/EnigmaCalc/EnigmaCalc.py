@@ -88,7 +88,7 @@ class Gui:
         except:
             print function.function_text + "is not a valid function"
 
-            tkMessageBox.showinfo("Error", function.function_text + "is not a valid function")
+            tkMessageBox.showinfo("Error", function_text + "is not a valid function")
             
     #call this once!
     #gets a dictionary of functions allowed to be called by eval
@@ -109,6 +109,5 @@ class Gui:
 def main():
     GUI = Gui()
     GUI.startUp()
-    
     
 main()
