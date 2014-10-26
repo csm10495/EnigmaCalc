@@ -46,10 +46,14 @@ class Gui:
         #inputbox for function
         graph_entry = Tkinter.Entry(root, text = "")
         graph_entry.pack(side = Tkinter.LEFT)
+        graph_entry.focus_set()     #focus on this entry
     
         #graph button
         b = Tkinter.Button(root, text="Graph!", command = lambda: self.graph(graph_entry.get(), self.safe_dict))
         b.pack()
+
+        #enter calls self.graph
+        root.bind("<Return>", lambda event: self.graph(graph_entry.get(), self.safe_dict))
 
         #clear button
         c = Tkinter.Button(root, text="Clear", command = lambda: graph_entry.delete(0,Tkinter.END))
