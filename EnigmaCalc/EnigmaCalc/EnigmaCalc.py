@@ -1,6 +1,8 @@
 #This file is part of EnigmaCalc
 #Team Enigma - RPI SDD - Fall 2014
 
+import matplotlib
+matplotlib.use('TkAgg')
 
 import pylab     #graphing library, part of matplotlib
 import Tkinter   #GUI library, standard Python
@@ -54,6 +56,7 @@ class Gui:
 
     #graphs a function by grabbing from e.get()
     def graph(self, function_text, safe_dict):
+            
         x = pylab.arange(-10, 10, .01)
         safe_dict['x'] = locals().get('x')
     
