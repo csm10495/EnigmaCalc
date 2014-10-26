@@ -17,10 +17,11 @@ class Function:
         self.function_text = self.function_text.replace("^", "**").lower()
 
         #add a * between a number and letter (ex: 2x)
+        #or x and a letter (ex: xsin)
         for i in range(len(self.function_text)):
-            if self.function_text[i].isdigit():
-                if self.function_text[i+1].isalpha():
-                    self.function_text = self.function_text[:i+1]+ '*' + self.function_text[i+1:]
+            if self.function_text[i].isdigit() and self.function_text[i+1].isalpha()\
+                or self.function_text[i]== 'x' and self.function_text[i+1].isalpha():
+                self.function_text = self.function_text[:i+1]+ '*' + self.function_text[i+1:]
         
         self.function_text = self.function_text + "+x-x"
 
