@@ -4,10 +4,9 @@
 import matplotlib
 matplotlib.use('TkAgg')
 
-import pylab     #graphing library, part of matplotlib
-import Tkinter   #GUI library, standard Python
-import tkMessageBox
-
+import pylab        #graphing library, part of matplotlib
+import Tkinter      #GUI library, standard Python
+import tkMessageBox #Used to make the error box
 
 class Function:
     def __init__(self, function_text = ""):
@@ -25,51 +24,60 @@ class Function:
         
         self.function_text = self.function_text + "+x-x"
 
-        
-    
+        self.function_text = self.function_text.replace("csc", "1/sin")
+        self.function_text = self.function_text.replace("sec", "1/cos")
+        self.function_text = self.function_text.replace("cot", "1/tan")
+
 class Gui:
     
     def __init__(self):
         self.safe_dict = {}
         self.safe_list= []
         self.root = None
-   
+        
     def startUp(self):
         self.safe_dict = self.getSafeDict()
     
         # create window contents
-        root = Tkinter.Tk()
+        self.root = Tkinter.Tk()
     
         #set window title
-        root.wm_title("EC")
+        self.root.wm_title("EC")
     
         #instruction text
-        instr = Tkinter.Label(root, text = "Input Function")
+        instr = Tkinter.Label(self.root, text = "Input Function")
         instr.pack()
     
         #Y = text
-        yequals = Tkinter.Label(root, text = "Y = ")
+        yequals = Tkinter.Label(self.root, text = "Y = ")
         yequals.pack(side = Tkinter.LEFT)
     
         #inputbox for function
-        graph_entry = Tkinter.Entry(root, text = "")
-        graph_entry.pack(side = Tkinter.LEFT)
-        graph_entry.focus_set()     #focus on this entry
+        self.graph_entry = Tkinter.Entry(self.root, text = "")
+        self.graph_entry.pack(side = Tkinter.LEFT)
+        self.graph_entry.focus_set()     #focus on this entry
     
         #graph button
-        b = Tkinter.Button(root, text="Graph!", command = lambda: self.graph(graph_entry.get(), self.safe_dict))
-        b.pack()
+        self.b = Tkinter.Button(self.root, text="Graph!", command = lambda: self.graph(self.graph_entry.get(), self.safe_dict))
+        self.b.pack()
 
         #enter calls self.graph
-        root.bind("<Return>", lambda event: self.graph(graph_entry.get(), self.safe_dict))
+        self.root.bind("<Return>", lambda event: self.EnterKey())
 
         #clear button
-        c = Tkinter.Button(root, text="Clear", command = lambda: graph_entry.delete(0,Tkinter.END))
-        c.pack(side = Tkinter.RIGHT)
+        self.c = Tkinter.Button(self.root, text="Clear", command = lambda: self.graph_entry.delete(0,Tkinter.END))
+        self.c.pack(side = Tkinter.RIGHT)
         
         #mainloop needs to be run
         #Every GUI is a loop...
-        root.mainloop()
+        self.root.mainloop()
+
+    def EnterKey(self):
+        if self.root.focus_get() == self.c:
+            self.graph_entry.delete(0,Tkinter.END)
+        elif self.root.focus_get() == self.graph_entry or self.b:
+            self.graph(self.graph_entry.get(), self.safe_dict)
+        
 
     #graphs a function by grabbing from e.get()
     def graph(self, function_text, safe_dict):
@@ -98,14 +106,14 @@ class Gui:
             pylab.show()
             
         except:
-            print function.function_text + "is not a valid function"
+            print function_text, "is not a valid function"
 
-            tkMessageBox.showinfo("Error", function_text + "is not a valid function")
+            tkMessageBox.showinfo("Error", function_text + " is not a valid function")
             
     #call this once!
     #gets a dictionary of functions allowed to be called by eval
     def getSafeDict(self):
-        safe_list = ['sin', 'cos', 'tan', 'arcsin', 'arcsinh', 'sinh', 'arccos', 'arccosh', 'cosh', 'arctan', 'arctanh', 'tanh', 'e', 'log', 'log2', 'log10', 'sqrt'] #todo -> add more functions from pylab to this list
+        safe_list = ['sin', 'cos', 'tan', 'arcsin', 'arcsinh', 'sinh', 'arccos', 'arccosh', 'cosh', 'arctan', 'arctanh', 'tanh', 'e', 'log', 'log2', 'log10', 'sqrt', 'pi']
         safe_dict = dict((k, getattr(pylab, k)) for k in safe_list)
     
         # adding some more things to safe_dict that are not in pylab
@@ -117,7 +125,7 @@ class Gui:
         safe_dict['**'] = locals().get('**')
     
         return safe_dict
-
+    
 def main():
     GUI = Gui()
     GUI.startUp()
