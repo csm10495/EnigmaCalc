@@ -17,7 +17,11 @@ class Function:
         #All input is converted to lower so no caps matter
         self.function_text = self.function_text.replace("^", "**").lower()
         self.function_text = self.function_text + "+x-x"
-        
+        self.function_text = self.function_text.replace("csc", "1/sin")
+        self.function_text = self.function_text.replace("sec", "1/cos")
+        self.function_text = self.function_text.replace("cot", "1/tan")
+
+
     
 class Gui:
     
@@ -97,7 +101,7 @@ class Gui:
     #call this once!
     #gets a dictionary of functions allowed to be called by eval
     def getSafeDict(self):
-        safe_list = ['sin', 'cos', 'tan', 'arcsin', 'arcsinh', 'sinh', 'arccos', 'arccosh', 'cosh', 'arctan', 'arctanh', 'tanh', 'e', 'log', 'log2', 'log10', 'sqrt'] #todo -> add more functions from pylab to this list
+        safe_list = ['sin', 'cos', 'tan', 'arcsin', 'arcsinh', 'sinh', 'arccos', 'arccosh', 'cosh', 'arctan', 'arctanh', 'tanh', 'e', 'log', 'log2', 'log10', 'sqrt', 'pi']
         safe_dict = dict((k, getattr(pylab, k)) for k in safe_list)
     
         # adding some more things to safe_dict that are not in pylab
