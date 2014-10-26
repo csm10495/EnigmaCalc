@@ -6,6 +6,7 @@ matplotlib.use('TkAgg')
 
 import pylab     #graphing library, part of matplotlib
 import Tkinter   #GUI library, standard Python
+import tkMessageBox
 
 
 class Function:
@@ -64,21 +65,27 @@ class Gui:
         function = Function(function_text)
         function.formatFunction()
         
-        print "What? " + function.function_text
+        print "What? " + function_text
     
-        y = eval(function.function_text, {"__builtins__":None}, safe_dict) 
+        try:
+            y = eval(function.function_text, {"__builtins__":None}, safe_dict) 
     
-        #sinx instead of sin(x) 
-        #Maybe just add '(' x ')' parenthesis to all x's?
+            #sinx instead of sin(x) 
+            #Maybe just add '(' x ')' parenthesis to all x's?
     
-        print "Graphing: Y =", function_text
-        pylab.plot(x, y, label = ("y = " + function_text))
+            print "Graphing: Y =", function_text
+            pylab.plot(x, y, label = ("y = " + function_text))
     
-        #make the graph legend appear
-        pylab.legend(loc='upper right')
+            #make the graph legend appear
+            pylab.legend(loc='upper right')
 
-        pylab.show()
+            pylab.show()
+            
+        except:
+            print function.function_text + "is not a valid function"
 
+            tkMessageBox.showinfo("Error", function.function_text + "is not a valid function")
+            
     #call this once!
     #gets a dictionary of functions allowed to be called by eval
     def getSafeDict(self):
