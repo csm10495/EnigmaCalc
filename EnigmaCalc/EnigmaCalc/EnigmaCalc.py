@@ -16,7 +16,10 @@ class Function:
     def formatFunction(self):       
         #All input is converted to lower so no caps matter
         self.function_text = self.function_text.replace("^", "**").lower()
+        #if len(self.function_text) == 2 and self.function_text[1] == 'x':
+        #    self.function_text = self.function_text[0]+ '*' + self.function_text[1]
         self.function_text = self.function_text + "+x-x"
+
         
     
 class Gui:
