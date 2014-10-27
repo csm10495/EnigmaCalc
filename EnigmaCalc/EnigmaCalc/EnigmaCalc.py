@@ -16,12 +16,16 @@ class Function:
         #All input is converted to lower so no caps matter
         self.function_text = self.function_text.replace("^", "**").lower()
 
-        #add a * between a number and letter (ex: 2x)
-        #or x and a letter (ex: xsin)
-        for i in range(len(self.function_text)-1):
+        #add support for several common user shortcuts
+        strlen = len(self.function_text)-1
+        i=0
+        while i < strlen:
             if self.function_text[i].isdigit() and self.function_text[i+1].isalpha()\
-                or self.function_text[i]== 'x' and self.function_text[i+1].isalpha():
+            or self.function_text[i]== 'x' and self.function_text[i+1].isalpha():
                 self.function_text = self.function_text[:i+1]+ '*' + self.function_text[i+1:]
+                strlen += 1
+            i+=1
+        
         
         self.function_text = self.function_text + "+x-x"
 
