@@ -54,8 +54,8 @@ class Gui:
         instr.pack()
     
         #Y = text
-        yequals = Tkinter.Label(self.root, text = "Y = ")
-        yequals.pack(side = Tkinter.LEFT)
+        y_equals = Tkinter.Label(self.root, text = "Y = ")
+        y_equals.pack(side = Tkinter.LEFT)
     
         #inputbox for function
         self.graph_entry = Tkinter.Entry(self.root, text = "")
