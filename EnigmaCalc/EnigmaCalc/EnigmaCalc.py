@@ -39,6 +39,7 @@ class Gui:
         self.safe_dict = {}
         self.safe_list= []
         self.root = None
+        self.is_deg = False
         
     def startUp(self):
         self.safe_dict = self.getSafeDict()
@@ -73,10 +74,23 @@ class Gui:
         #clear button
         self.c = Tkinter.Button(self.root, text="Clear", command = lambda: self.graph_entry.delete(0,Tkinter.END))
         self.c.pack(side = Tkinter.RIGHT)
+
+        #degree vs radian button
+        self.dvr = Tkinter.Button(self.root, text="Graphing in Radians", command = lambda: self.flipDegRad())
+        self.dvr.pack(side = Tkinter.RIGHT)
         
         #mainloop needs to be run
         #Every GUI is a loop...
         self.root.mainloop()
+
+    #flips is_deg variable
+    def flipDegRad(self):
+        self.is_deg = not self.is_deg
+        if self.is_deg:
+            self.dvr["text"] = "Graphing in Degrees"
+        else:
+            self.dvr["text"] = "Graphing in Radians"
+             
 
     def EnterKey(self):
         if self.root.focus_get() == self.c:
@@ -99,12 +113,15 @@ class Gui:
     
         try:
             y = eval(function.function_text, {"__builtins__":None}, safe_dict) 
-    
             #sinx instead of sin(x) 
             #Maybe just add '(' x ')' parenthesis to all x's?
     
             print "Graphing: Y =", function_text
-            pylab.plot(x, y, label = ("y = " + function_text))
+
+            if self.is_deg:
+                pylab.plot(pylab.rad2deg(x), y, label = ("y = " + function_text))
+            else:
+                pylab.plot(x, y, label = ("y = " + function_text))
     
             #make the graph legend appear
             pylab.legend(loc='upper right')
