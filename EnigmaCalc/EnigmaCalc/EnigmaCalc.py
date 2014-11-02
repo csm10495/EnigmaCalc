@@ -47,7 +47,8 @@ class Gui:
         self.root = Tkinter.Tk()
     
         #set window title
-        self.root.wm_title("EC")
+        self.root.wm_title("Enigma Calc")
+        self.root.minsize(width=250, height = 50)
     
         #instruction text
         instr = Tkinter.Label(self.root, text = "Input Function")
@@ -64,7 +65,7 @@ class Gui:
     
         #graph button
         self.b = Tkinter.Button(self.root, text="Graph!", command = lambda: self.graph(self.graph_entry.get(), self.safe_dict))
-        self.b.pack()
+        self.b.pack(side = Tkinter.LEFT)
 
         #enter calls self.graph
         self.root.bind("<Return>", lambda event: self.EnterKey())
