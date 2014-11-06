@@ -78,6 +78,14 @@ class Gui:
         #degree vs radian button
         self.dvr = Tkinter.Button(self.root, text="Graphing in Radians", command = lambda: self.flipDegRad())
         self.dvr.pack(side = Tkinter.RIGHT)
+
+        #define axis range
+        self.x_axis_range = Tkinter.Label(self.root, text = "X axis on")
+        self.x_axis_range.pack()
+        self.x_axis_min = Tkinter.Entry(self.root, text = "")
+        self.x_axis_min.pack(side = Tkinter.LEFT)
+        self.x_axis_max = Tkinter.Entry(self.root, text = "")
+        self.x_axis_max.pack(side = Tkinter.LEFT)
         
         #mainloop needs to be run
         #Every GUI is a loop...
