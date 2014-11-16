@@ -53,7 +53,7 @@ class Gui:
     
         #instruction text
         instr = Tkinter.Label(self.root, text = "Input Function")
-        instr.pack(side = Tkinter.LEFT)
+        instr.pack()
     
         #Y = text
         y_equals = Tkinter.Label(self.root, text = "Y = ")
@@ -65,7 +65,7 @@ class Gui:
         self.graph_entry.focus_set()     #focus on this entry
     
         #graph button
-        self.b = Tkinter.Button(self.root, text="Graph!", command = lambda: self.graph(self.graph_entry.get(), self.safe_dict))
+        self.b = Tkinter.Button(self.root, text="Graph!", command = lambda: self.graph(self.graph_entry.get(), self.x_axis_min.get(), self.x_axis_max.get(), self.safe_dict))
         self.b.pack(side = Tkinter.LEFT)
 
         #enter calls self.graph
@@ -78,14 +78,12 @@ class Gui:
         #degree vs radian button
         self.dvr = Tkinter.Button(self.root, text="Graphing in Radians", command = lambda: self.flipDegRad())
         self.dvr.pack(side = Tkinter.RIGHT)
-
+        
         #define axis range
         self.x_axis_range = Tkinter.Label(self.root, text = "X axis on")
         self.x_axis_range.pack(side = Tkinter.LEFT)
         self.x_axis_min = Tkinter.Entry(self.root, width = 5, text = "")
         self.x_axis_min.pack(side = Tkinter.LEFT)
-        self.x_axis_to = Tkinter.Label(self.root, text = "to")
-        self.x_axis_to.pack(side = Tkinter.LEFT)
         self.x_axis_max = Tkinter.Entry(self.root, width = 5, text = "")
         self.x_axis_max.pack(side = Tkinter.LEFT)
         
@@ -106,44 +104,76 @@ class Gui:
         if self.root.focus_get() == self.c:
             self.graph_entry.delete(0,Tkinter.END)
         elif self.root.focus_get() == self.graph_entry or self.b:
-            self.graph(self.graph_entry.get(), self.safe_dict)
+            self.graph(self.graph_entry.get(), self.x_axis_min.get(), self.x_axis_max.get(), self.safe_dict)
         
 
     #graphs a function by grabbing from e.get()
-    def graph(self, function_text, safe_dict):
-            
-        x = pylab.arange(-10, 10, .01)
-        safe_dict['x'] = locals().get('x')
-    
+    def graph(self, function_text, xmin, xmax, safe_dict):
+		try:
+		    #allow custom x ranges
+			try:
+				if xmin == "pi":
+					xmin = pylab.pi
+				elif xmin == "-pi":
+					xmin = -pylab.pi
+				elif xmin == "":
+					xmin = -10.0
+				else:	
+					xmin = float(self.x_axis_min.get())
+			except:
+				print xmin, "is not a valid input."
+				tkMessageBox.showinfo("Error", xmin + " is not a valid value for a range")
+				raise
+			try:
+				if xmax == "pi":
+					xmax = pylab.pi
+				elif xmax == "-pi":
+					xmax = -pylab.pi
+				elif xmax == "":
+					xmax = 10.0
+				else:
+					xmax = float(self.x_axis_max.get())
+				print "Xmin:", xmin, "Xmax:", xmax
+			except:
+				print xmax, "is not a valid input."
+				tkMessageBox.showinfo("Error", xmax + " is not a valid value for a range")
+				raise
+			#check for invalid ranges
+			if xmin >= xmax:
+				tkMessageBox.showinfo("Error",  "Invalid range. Xmin is not less than Xmax")
+				exit()
+			#pass function to Function class for evaluation
+			try:
+				x = pylab.arange(xmin, xmax, .01)
+				safe_dict['x'] = locals().get('x')
+				function = Function(function_text)
+				function.formatFunction()
+			except:
+				print "Error occurred during function formatting."
+				tkMessageBox.showinfo("Error", "Error occurred during function formatting")
+				raise
+			#attempt to graph a function
+			try:
+				y = eval(function.function_text, {"__builtins__":None}, safe_dict) 
+				#sinx instead of sin(x) 
+				#Maybe just add '(' x ')' parenthesis to all x's?
+		
+				print "Graphing: Y =", function_text
 
-        function = Function(function_text)
-        function.formatFunction()
-        
-        print "What? " + function_text
-    
-        try:
-            y = eval(function.function_text, {"__builtins__":None}, safe_dict) 
-            #sinx instead of sin(x) 
-            #Maybe just add '(' x ')' parenthesis to all x's?
-    
-            print "Graphing: Y =", function_text
-
-            if self.is_deg:
-                pylab.plot(pylab.rad2deg(x), y, label = ("y = " + function_text))
-            else:
-                pylab.plot(x, y, label = ("y = " + function_text))
-    
-            #make the graph legend appear
-            pylab.legend(loc='upper right')
-            
-            pylab.grid(True)
-            
-            pylab.show()
-            
-        except:
-            print function_text, "is not a valid function"
-
-            tkMessageBox.showinfo("Error", function_text + " is not a valid function")
+				if self.is_deg:
+					pylab.plot(pylab.rad2deg(x), y, label = ("y = " + function_text))
+				else:
+					pylab.plot(x, y, label = ("y = " + function_text))
+		
+				#make the graph legend appear
+				pylab.legend(loc='upper right')
+				pylab.show()
+			except:
+				print function_text, "is not a valid function"
+				tkMessageBox.showinfo("Error", function_text + " is not a valid function")
+				raise
+		except:
+			print "An error occurred during graphing."
             
     #call this once!
     #gets a dictionary of functions allowed to be called by eval
