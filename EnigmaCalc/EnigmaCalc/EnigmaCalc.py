@@ -169,6 +169,7 @@ class Gui:
 		
 				#make the graph legend appear
 				pylab.legend(loc='upper right')
+				pylab.grid(True)
 				pylab.show()
 			except:
 				print function_text, "is not a valid function"
