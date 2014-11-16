@@ -53,7 +53,7 @@ class Gui:
     
         #instruction text
         instr = Tkinter.Label(self.root, text = "Input Function")
-        instr.pack()
+        instr.pack(side = Tkinter.LEFT)
     
         #Y = text
         y_equals = Tkinter.Label(self.root, text = "Y = ")
@@ -81,10 +81,10 @@ class Gui:
 
         #define axis range
         self.x_axis_range = Tkinter.Label(self.root, text = "X axis on")
-        self.x_axis_range.pack()
-        self.x_axis_min = Tkinter.Entry(self.root, text = "")
+        self.x_axis_range.pack(side = Tkinter.LEFT)
+        self.x_axis_min = Tkinter.Entry(self.root, width = 5, text = "")
         self.x_axis_min.pack(side = Tkinter.LEFT)
-        self.x_axis_max = Tkinter.Entry(self.root, text = "")
+        self.x_axis_max = Tkinter.Entry(self.root, width = 5, text = "")
         self.x_axis_max.pack(side = Tkinter.LEFT)
         
         #mainloop needs to be run
