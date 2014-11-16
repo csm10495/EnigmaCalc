@@ -84,6 +84,8 @@ class Gui:
         self.x_axis_range.pack(side = Tkinter.LEFT)
         self.x_axis_min = Tkinter.Entry(self.root, width = 5, text = "")
         self.x_axis_min.pack(side = Tkinter.LEFT)
+        self.x_axis_to = Tkinter.Label(self.root, text = "to")
+        self.x_axis_to.pack(side = Tkinter.LEFT)
         self.x_axis_max = Tkinter.Entry(self.root, width = 5, text = "")
         self.x_axis_max.pack(side = Tkinter.LEFT)
         
