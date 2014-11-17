@@ -157,15 +157,13 @@ class Gui:
 			#attempt to graph a function
 			try:
 				y = eval(function.function_text, {"__builtins__":None}, safe_dict) 
-				#sinx instead of sin(x) 
-				#Maybe just add '(' x ')' parenthesis to all x's?
-		
 				print "Graphing: Y =", function_text
-
+				
+				#graph in radians or degrees
 				if self.is_deg:
-					pylab.plot(pylab.rad2deg(x), y, label = ("y = " + function_text))
+					pylab.plot(pylab.rad2deg(x), y, label = ("y = " + function_text + ", [ " + str(xmin) + ", " + str(xmax) + "]"))
 				else:
-					pylab.plot(x, y, label = ("y = " + function_text))
+					pylab.plot(x, y, label = ("y = " + function_text + ", [ " + str(xmin) + ", " + str(xmax) + "]"))
 		
 				#make the graph legend appear
 				pylab.legend(loc='upper right')
@@ -185,7 +183,6 @@ class Gui:
         safe_dict = dict((k, getattr(pylab, k)) for k in safe_list)
     
         # adding some more things to safe_dict that are not in pylab
-        # we can't add x yet because it isn't set
         safe_dict['+'] = locals().get('+')
         safe_dict['-'] = locals().get('-')
         safe_dict['/'] = locals().get('/')
