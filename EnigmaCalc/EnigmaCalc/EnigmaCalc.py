@@ -108,7 +108,6 @@ class Gui:
         elif self.root.focus_get() == self.graph_entry or self.b:
             self.graph(self.graph_entry.get(), self.x_axis_min.get(), self.x_axis_max.get(), self.safe_dict)
         
-
     #graphs a function by grabbing from e.get()
     def graph(self, function_text, xmin, xmax, safe_dict):
 		try:
